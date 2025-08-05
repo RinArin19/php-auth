@@ -5,6 +5,7 @@
   <meta charset="UTF-8">
   <title>Register</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 <body class="bg-light">
 <div class="container mt-5">
@@ -26,9 +27,8 @@
             <div class="mb-2"><input class="form-control" type="file" name="foto" required></div>
             <div class="mb-2"><input class="form-control" type="password" name="password" placeholder="Password" required></div>
             <div class="mb-2"><input class="form-control" type="password" name="repassword" placeholder="Ulangi Password" required></div>
-            <div class="mb-2">
-              <img src="captcha.php" alt="Captcha" onclick="this.src='captcha.php?'+Date.now()" style="cursor:pointer;" title="Klik untuk ganti captcha">
-              <input class="form-control mt-2" type="text" name="captcha" placeholder="Masukkan kode di atas" required>
+            <div class="mb-3">
+              <div class="g-recaptcha" data-sitekey="6LdYzZorAAAAABIkti0AuPl-o7fdyvfkDOTJ3-Hn"></div>
             </div>
             <button type="submit" class="btn btn-primary w-100">Daftar</button>
           </form>

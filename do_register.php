@@ -8,11 +8,14 @@ $alamat     = $_POST['alamat'];
 $pekerjaan  = $_POST['pekerjaan'];
 $password   = $_POST['password'];
 $repassword = $_POST['repassword'];
-$captcha    = $_POST['captcha'] ?? '';
+$captcha    = $_POST['g-recaptcha-response'] ?? '';
 
-// Validasi captcha
-if (strtoupper(trim($captcha)) !== $_SESSION['captcha']) {
-    $_SESSION['msg'] = "Captcha salah.";
+// Validasi Captcha Google
+$secretKey = "6LdYzZorAAAAABdD-LyrKWJKT2q3IlLdcm33rgSx";
+$response = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret={$secretKey}&response={$captcha}");
+$responseKeys = json_decode($response, true);
+if (!$responseKeys["success"]) {
+    $_SESSION['msg'] = "Captcha Google gagal diverifikasi.";
     header("Location: register.php");
     exit;
 }
@@ -38,8 +41,8 @@ $stmt = $conn->prepare("INSERT INTO users (nama, email, alamat, pekerjaan, foto,
 $stmt->bind_param("ssssss", $nama, $email, $alamat, $pekerjaan, $foto_name, $hashed);
 
 if ($stmt->execute()) {
-    $_SESSION['msg'] = "Registrasi berhasil. Silakan melanjutkan ke halaman login.";
-    header("Location: register.php");
+    $_SESSION['msg'] = "Registrasi berhasil. Silakan login.";
+    header("Location: login.php");
 } else {
     $_SESSION['msg'] = "Gagal mendaftar: Email mungkin sudah digunakan.";
     header("Location: register.php");
